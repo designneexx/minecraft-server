@@ -1,10 +1,11 @@
 const express = require('express')
 const ip = require('ip')
 const { JavaCaller } = require('java-caller')
+const functions = require('firebase-functions')
 
 const app = express()
 
-app.listen(process.env.PORT || 3007, (data) => {
+app.listen(process.env.PORT || 3000, (data) => {
   const java = new JavaCaller({
     jar: 'mcserver.jar',
   })
@@ -24,5 +25,7 @@ app.listen(process.env.PORT || 3007, (data) => {
 app.get('/', (req, res) => {
   res.send(`Hi! ${ip.address()}`)
 })
+
+module.exports.app = functions.https.onRequest(app)
 
 module.exports = app
